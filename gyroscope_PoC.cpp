@@ -3,7 +3,7 @@
 #include <cstdint>
 
 int main(){
-	std::ifstream plik("/dev/input/event14", std::ios::binary); // "pci-0000:00:14.0-usb-0:1:1.0-event" (NOT "-joystick"!)
+std::ifstream eventFile("/dev/input/event14", std::ios::binary); // "pci-0000:00:14.0-usb-0:1:1.0-event" (NOT "-joystick"!)
 	union boo {
 		char memblock[24];
 		uint16_t intblock[12];
@@ -15,7 +15,7 @@ int main(){
 	} pad;
 
 	while(true){
-		plik.read(s.memblock, 24);
+		eventFile.read(s.memblock, 24);
 		if(s.intblock[18] > 0x00){
 			if(s.memblock[18] == 0x01){ // front, rear; 0 = pad is vertical; front is positive
 				//std::cout << (int)s.memblock[20] << "\n";
